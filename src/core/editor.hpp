@@ -6,7 +6,7 @@
 class Editor
 {
     public:
-        Editor(const std::string& filePath);
+        explicit Editor(const std::string& filePath);
         void update(Key key);
         const ContentManager& getContent() const;
     private:

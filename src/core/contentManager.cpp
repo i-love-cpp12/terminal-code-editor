@@ -1,7 +1,8 @@
 #include "contentManager.hpp"
 #include "../error/fileError.hpp"
+#include <utility>
 
-ContentManager::ContentManager(FileContentRepositoryInterface *fileRepo): fileRepo(fileRepo)
+ContentManager::ContentManager(FileContentRepositoryInterface &fileRepo): fileRepo(fileRepo)
 {
     loadData();
 }
@@ -18,28 +19,33 @@ size_t ContentManager::linesCount() const
 
 const std::string &ContentManager::getLine(size_t lineIndex) const
 {
-    return data[lineIndex];
+    return data.at(lineIndex);
 }
 
 void ContentManager::setLine(size_t lineIndex, const std::string &lineContent)
 {
-    data[lineIndex] = lineContent;    
+    data.at(lineIndex) = lineContent;    
 }
 
 void ContentManager::addLine(const std::string &content)
 {
     data.push_back(content);
 }
+void ContentManager::addLine(std::string &&content)
+{
+    data.push_back(std::move(content));
+}
 
 void ContentManager::saveData() const
 {
-    fileRepo->save(data);
+    if(!fileRepo.save(data))
+        throw FileError(fileRepo.getFileShortName(), FileError::FileErrorType::WRITE_ERROR);
 }
 
 void ContentManager::loadData()
 {
-    const auto& lines = fileRepo->readLines();
-    if(!lines.has_value())
-        throw FileError(fileRepo->getFileShortName(), FileError::FileErrorType::READ_ERROR);
-    data = lines.value();
+    auto lines = fileRepo.readLines();
+    if(!lines)
+        throw FileError(fileRepo.getFileShortName(), FileError::FileErrorType::READ_ERROR);
+    data = std::move(*lines);
 }

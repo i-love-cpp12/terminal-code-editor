@@ -8,7 +8,7 @@
 class FileContentRepository : public FileContentRepositoryInterface
 {
     public:
-        FileContentRepository(const std::filesystem::path& path);
+        explicit FileContentRepository(const std::filesystem::path& path);
         ~FileContentRepository();
         virtual bool save(const std::vector<std::string>& lines) const override;
         virtual std::optional<std::vector<std::string>> readLines() const override;

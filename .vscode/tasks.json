@@ -7,6 +7,7 @@
             "args": [
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\core\\contentManager.cpp",
+                "${workspaceFolder}\\src\\core\\editor.cpp",
                 "${workspaceFolder}\\src\\file\\fileContentRepository.cpp",
                 "${workspaceFolder}\\src\\error\\fileError.cpp",
                 "-std=c++20",

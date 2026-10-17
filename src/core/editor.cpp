@@ -1,6 +1,6 @@
 #include "editor.hpp"
 
-Editor::Editor(const std::string &filePath): fileRepo(filePath), contentManager(&fileRepo)
+Editor::Editor(const std::string &filePath): fileRepo(filePath), contentManager(fileRepo)
 {
 }
 

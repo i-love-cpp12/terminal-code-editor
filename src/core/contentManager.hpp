@@ -6,16 +6,17 @@
 class ContentManager
 {
     public:
-        ContentManager(FileContentRepositoryInterface* fileRepo);
+        explicit ContentManager(FileContentRepositoryInterface &fileRepo);
         const std::vector<std::string>& getLines() const;
         size_t linesCount() const;
         const std::string& getLine(size_t lineIndex) const;
         void setLine(size_t lineIndex, const std::string& lineContent);
         void addLine(const std::string& content = "");
+        void addLine(std::string&& content = "");
         void saveData() const;
     private:
         std::vector<std::string> data;
-        FileContentRepositoryInterface* fileRepo;
+        FileContentRepositoryInterface& fileRepo;
 
         void loadData();
 };

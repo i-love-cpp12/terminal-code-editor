@@ -9,7 +9,7 @@ int main(int argc, char** args)
     {
         FileContentRepository repo(args[1]);
     
-        ContentManager manager(&repo);
+        ContentManager manager(repo);
 
         manager.addLine("   bla bla");
         manager.addLine("bla bla");
