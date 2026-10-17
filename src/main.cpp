@@ -2,6 +2,8 @@
 #include"core/contentManager.hpp"
 #include"file/fileContentRepository.hpp"
 #include "error/fileError.hpp"
+#include "render/editorRenderer.hpp"
+#include <conio.h>
 
 int main(int argc, char** args)
 {
@@ -11,20 +13,28 @@ int main(int argc, char** args)
     
         ContentManager manager(repo);
 
-        manager.addLine("   bla bla");
-        manager.addLine("bla bla");
-        manager.addLine("bla bla");
+        // manager.addLine("   bla bla");
+        // manager.addLine("bla bla");
+        // manager.addLine("bla bla");
         manager.setLine(0, "nowa linia 1");
         manager.saveData();
         const auto& lines = manager.getLines();
-        for(size_t i = 0; i < lines.size(); ++i)
+        while(true)
         {
-            std::cout<<i + 1<<' '<<lines[i]<<'\n';
+            for(size_t i = 0; i < lines.size(); ++i)
+            {
+                std::cout<<i + 1<<' '<<lines[i]<<'\n';
+            }
+            int ch = _getch();
+            EditorRenderer::render(nullptr);
+            std::cout<<'\n'<<"char: "<<ch<<'\n';
         }
+        std::cin.get();
     }
     catch(FileError err)
     {
         std::cout<<err.what();
     }
+
     return 0;
 }
